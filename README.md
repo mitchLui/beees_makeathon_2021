@@ -1,6 +1,6 @@
 # BEEES Make-a-thon 2021
 
-This project stores the project created for the [University of Bristol BEEES Make-a-thon 2021][1].
+This repository stores the project created for the [University of Bristol BEEES Make-a-thon 2021][1].
 
 ---
 
