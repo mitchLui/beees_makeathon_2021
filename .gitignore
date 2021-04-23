@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Project related files
+dataset/with_mask/*
+dataset/without_mask/*

@@ -1,0 +1,6 @@
+tensorflow
+sklearn
+imutils
+loguru
+numpy
+pyfirmata

@@ -33,6 +33,8 @@ Our team (named Rogue One after the fact that we were team 1 and Star Wars is aw
 
 ## 1.3. Our Project
 
+
+
 ---
 
 ## 1.4. Tech Stack
@@ -41,6 +43,8 @@ Our team (named Rogue One after the fact that we were team 1 and Star Wars is aw
 ---
 
 ## 1.5. Deployment
+
+
 
 ---
 
