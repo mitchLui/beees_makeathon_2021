@@ -13,7 +13,7 @@ import time
 import cv2
 import os
 
-class DetectByVideo():
+class MaskDetector():
 
 	def __init__(self,path_to_face,path_to_mask,filter_prob,source_int):
  # their corresponding locations,
