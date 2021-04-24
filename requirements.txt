@@ -1,4 +1,5 @@
 tensorflow
+python-opencv
 sklearn
 imutils
 loguru
