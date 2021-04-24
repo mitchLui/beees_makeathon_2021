@@ -1,7 +1,3 @@
-# USAGE
-# python detect_mask_video.py
-
-# import the necessary packages
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
@@ -15,21 +11,16 @@ import os
 
 class MaskDetector():
 
-	def __init__(self,path_to_face,path_to_mask,filter_prob,source_int):
- # their corresponding locations,
- # and the list of predictions from our face mask network
-		self.path_to_face = path_to_face
-		self.path_to_mask = path_to_mask
-		self.filter_prob = filter_prob
-		self.source_int = source_int
-		self.prototxtPath = os.path.sep.join([self.path_to_face, "deploy.prototxt"])
-		self.weightsPath = os.path.sep.join([self.path_to_face,
+	def __init__(self, face_detector, model, confidence, source):
+		self.face_detector = face_detector
+		self.model = model
+		self.confidence = confidence
+		self.source = source
+		self.prototxtPath = os.path.sep.join([self.face_detector, "deploy.prototxt"])
+		self.weightsPath = os.path.sep.join([self.face_detector,
 		"res10_300x300_ssd_iter_140000.caffemodel"])
 		self.faceNet = cv2.dnn.readNet(self.prototxtPath, self.weightsPath)
-		self.maskNet = load_model(self.path_to_mask)
-		
-
-
+		self.maskNet = load_model(self.model)
 
 	def detect_and_predict_mask(self,frame):
 		# grab the dimensions of the frame and then construct a blob
@@ -53,7 +44,7 @@ class MaskDetector():
 
 			# filter out weak detections by ensuring the confidence is
 			# greater than the minimum confidence
-			if confidence > self.filter_prob:
+			if confidence > self.confidence:
 				# compute the (x, y)-coordinates of the bounding box for
 				# the object
 				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
@@ -87,13 +78,12 @@ class MaskDetector():
 		return locs,preds
 
 	# loop over the frames from the video stream
-	def Main(self):
-		
+	def run(self):
 		print("[INFO] loading face detector model...")
 		print("[INFO] loading face mask detector model...")
 		print("[INFO] starting video stream...")
 		# initialize the video stream and allow the camera sensor to warm up
-		vs = VideoStream(src=self.source_int).start()
+		vs = VideoStream(src=self.source).start()
 		time.sleep(2.0)
 		
 		while True:
@@ -135,27 +125,19 @@ class MaskDetector():
 			# if the `q` key was pressed, break from the loop
 			if key == ord("q"):
 				break
+		cv2.destroyAllWindows()
+		vs.stop()
 
 def run():
 		# construct the argument parser and parse the arguments
 		ap = argparse.ArgumentParser()
-		ap.add_argument("-f", "--face", type=str,
-			default="face_detector",
-			help="path to face detector model directory")
-		ap.add_argument("-m", "--model", type=str,
-			default="mask_detector.model",
-			help="path to trained face mask detector model")
-		ap.add_argument("-c", "--confidence", type=float, default=0.5,
-			help="minimum probability to filter weak detections")
-		ap.add_argument("-s", "--source", type=int, default=0, 
-			help="integer for source camera")
+		ap.add_argument("-f", "--face", type=str, default="face_detector", help="path to face detector model directory")
+		ap.add_argument("-m", "--model", type=str, default="mask_detector.model",help="path to trained face mask detector model")
+		ap.add_argument("-c", "--confidence", type=float, default=0.5, help="minimum probability to filter weak detections")
+		ap.add_argument("-s", "--source", type=int, default=0, help="integer for source camera")
 		args = vars(ap.parse_args())
-		
-		
-		program = DetectByVideo(args["face"],args["model"],args["confidence"],args["source"])
-		program.Main()
-		cv2.destroyAllWindows()
-		vs.stop()
+		program = MaskDetector(args["face"],args["model"],args["confidence"],args["source"])
+		program.run()
 
 if __name__ == "__main__":
 	run()
