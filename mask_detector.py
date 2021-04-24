@@ -3,12 +3,13 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 from loguru import logger
 import numpy as np
+from typing import Tuple
 import cv2
 import os
 
-class MaskDetector():
+class MaskDetector:
 
-	def __init__(self, face_detector, model, confidence, source):
+	def __init__(self, face_detector, model, confidence, source) -> None:
 		self.face_detector = face_detector
 		self.model = model
 		self.confidence = confidence
@@ -20,7 +21,7 @@ class MaskDetector():
 		logger.info("loading face mask detector model...")
 		self.maskNet = load_model(self.model)
 
-	def detect_and_predict_mask(self,frame):
+	def detect_and_predict_mask(self,frame) -> Tuple[list, list]:
 		# grab the dimensions of the frame and then construct a blob
 		# from it
 		(h, w) = frame.shape[:2]
