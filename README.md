@@ -33,11 +33,16 @@ Our team (named Rogue One after the fact that we were team 1 and Star Wars is aw
 
 ## 1.3. Our Project
 
+We decided to create a mask detection application to ensure that people are wearing masks correctly when entering stores or indoor places where social distancing is not possible.
 
+A Machine Learning model based on this [article][7] was adapted and improved upon by introducing a larger dataset, which allowed us to reach a high degree of accuracy when trying to detect if people were wearing masks correctly.
+
+The model is then connected to a webcam to get a live feed and detect if a person is wearing a mask. If they are wearing a mask, a connected Arduino board will let the person know they can enter by disabling the LED which is always on when the people in front of the webcam are not wearing masks correctly.
 
 ---
 
 ## 1.4. Tech Stack
+
 
 
 ---
@@ -51,9 +56,12 @@ Our team (named Rogue One after the fact that we were team 1 and Star Wars is aw
 ## 1.6. Usage
 
 
-[1]:https://www.beees.co.uk/make-a-thon-2021-announcement/
+---
+
+[1]: https://www.beees.co.uk/make-a-thon-2021-announcement/
 [2]: https://www.linkedin.com/in/mitchlui/
 [3]: https://www.linkedin.com/in/otis-lee-9154a91ba/
 [4]: https://www.linkedin.com/in/yat-chung-javis-lo-807611200/
 [5]: https://www.linkedin.com/in/ken-y-6b6379142/
 [6]: https://www.linkedin.com/in/dominic-chu-544966178/
+[7]: https://www.pyimagesearch.com/2020/05/04/covid-19-face-mask-detector-with-opencv-keras-tensorflow-and-deep-learning/
