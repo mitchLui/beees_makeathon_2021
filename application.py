@@ -23,7 +23,7 @@ class Application:
         model_trainer = ModelTrainer(dataset, model)
         model_trainer.train()
 
-    def run(self):
+    def run(self) -> None:
         logger.info("starting video stream...")
         vs = VideoStream(src=self.mask_detector.source).start()
         sleep(2)
@@ -80,7 +80,7 @@ class Application:
         vs.stop()
 
 
-def run(): 
+def run() -> None: 
     ap = argparse.ArgumentParser()
     ap.add_argument("-f", "--face", type=str, default="face_detector", help="path to face detector model directory")
     ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="path to output face mask detector model")

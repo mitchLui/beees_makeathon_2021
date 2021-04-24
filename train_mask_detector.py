@@ -15,6 +15,7 @@ from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from imutils import paths
+from typing import Tuple
 from loguru import logger
 import numpy as np
 import argparse
@@ -31,7 +32,7 @@ class ModelTrainer:
 		self.EPOCHS = 20
 		self.BS = 32
 
-	def load_images(self):
+	def load_images(self) -> Tuple[list, list]:
 		# grab the list of images in our dataset directory, then initialize
 		# the list of data (i.e., images) and class images
 		logger.info("loading images...")
@@ -56,7 +57,7 @@ class ModelTrainer:
 		labels = np.array(labels)
 		return data, labels
 
-	def preprocess_labels(self, labels):
+	def preprocess_labels(self, labels) -> Tuple[LabelBinarizer, list]:
 		logger.info("preprocessing data")
 		# perform one-hot encoding on the labels
 		lb = LabelBinarizer()
@@ -75,11 +76,11 @@ class ModelTrainer:
 			horizontal_flip=True,
 			fill_mode="nearest")
 	
-	def load_baseModel(self):
+	def load_baseModel(self) -> Model:
 		logger.info("loading baseModel...")
 		return MobileNetV2(weights="imagenet", include_top=False, input_tensor=Input(shape=(224, 224, 3)))
 
-	def load_headModel(self, baseModel): 
+	def load_headModel(self, baseModel) -> Model: 
 		logger.info("loading headModel...")
 		headModel = baseModel.output
 		headModel = AveragePooling2D(pool_size=(7, 7))(headModel)
@@ -89,7 +90,7 @@ class ModelTrainer:
 		headModel = Dense(2, activation="softmax")(headModel)
 		return headModel
 
-	def compile_model(self, model: Model, baseModel):
+	def compile_model(self, model: Model, baseModel) -> Tuple[Model, Model]:
 		logger.info("compiling model...")
 		for layer in baseModel.layers:
 			layer.trainable = False
@@ -98,7 +99,7 @@ class ModelTrainer:
 			metrics=["accuracy"])
 		return model, baseModel
 
-	def train_network_head(self, model: Model, aug: ImageDataGenerator, trainX, testX, trainY, testY):
+	def train_network_head(self, model: Model, aug: ImageDataGenerator, trainX, testX, trainY, testY) -> Model:
 		logger.info("training head...")
 		H = model.fit(
 			aug.flow(trainX, trainY, batch_size=self.BS),
@@ -109,7 +110,7 @@ class ModelTrainer:
 		)
 		return H
 
-	def evaluate_network(self, model: Model, lb: LabelBinarizer, testX, testY) -> Model:
+	def evaluate_network(self, model: Model, lb: LabelBinarizer, testX, testY) -> None:
 		# make predictions on the testing set
 		logger.info("evaluating network...")
 		# for each image in the testing set we need to find the index of the
@@ -139,7 +140,7 @@ class ModelTrainer:
 		model.save(self.model_path, save_format="h5")
 
 
-def run():
+def run() -> None:
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 	ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="path to output face mask detector model")
