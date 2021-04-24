@@ -11,17 +11,21 @@ import os
 
 class Application:
 
-    def __init__(self, model: str, retrain_model: bool = False, dataset: str = "", face_detector: str = "", confidence: int = 0.8, source: int = 0) -> None:
+    def __init__(self, model: str, port: str, retrain_model: bool = False, dataset: str = "", face_detector: str = "", confidence: int = 0.8, source: int = 0) -> None:
         if retrain_model or not os.path.isfile(model):
             logger.info("Retraining model...")
             self.retrain_model(dataset, model)
         self.model = model
-        self.arduino = ArduinoAdapter()
+        self.arduino = ArduinoAdapter(port)
         self.mask_detector = MaskDetector(face_detector, model, confidence, source)
 
     def retrain_model(self, dataset: str, model: str) -> None:
         model_trainer = ModelTrainer(dataset, model)
         model_trainer.train()
+    
+    def set_arduino_led(self, signal: bool) -> None:
+        if self.arduino.board:
+            self.arduino.set_led(signal)
 
     def run(self) -> None:
         logger.info("starting video stream...")
@@ -66,13 +70,13 @@ class Application:
             cv2.imshow("Mask Detector Prototype", frame)
             key = cv2.waitKey(1) & 0xFF
 
-            if not any(mask_array):
-                #TODO LIGHT UP LED
+            led_signal = not any(mask_array)
+            if led_signal:
                 logger.warning(f"Someone is not wearing a mask.")
             else:
                 logger.debug(f"Everyone is wearing a mask.")
-                
-
+            self.set_arduino_led(led_signal)
+            
             # if the `q` key was pressed, break from the loop
             if key == ord("q"):
                 break
@@ -88,8 +92,9 @@ def run() -> None:
     ap.add_argument("-d", "--dataset", default="dataset", help="path to input dataset")
     ap.add_argument("-c", "--confidence", type=float, default=0.8, help="minimum probability to filter weak detections")
     ap.add_argument("-s", "--source", type=int, default=0, help="integer for source camera")
+    ap.add_argument("-p", "--port", type=str, default="/dev/cu.usbmodem12341", help="port for arduino")
     args = vars(ap.parse_args())
-    app = Application(args["model"], args["retrain"], args["dataset"], args["face"], args["confidence"], args["source"])
+    app = Application(args["model"], args["port"], args["retrain"], args["dataset"], args["face"], args["confidence"], args["source"])
     app.run()
 
 if __name__ == "__main__":
