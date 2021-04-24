@@ -24,12 +24,12 @@ import os
 class ModelTrainer:
 
 
-	def __init__(self, dataset_path: str, model_path: str) -> None:
+	def __init__(self, dataset_path: str, model_path: str, epochs: int = 20) -> None:
 		logger.info("__init__ trainer")
 		self.dataset_path = dataset_path
 		self.model_path = model_path
 		self.INIT_LR = 1e-4
-		self.EPOCHS = 20
+		self.EPOCHS = epochs
 		self.BS = 32
 
 	def load_images(self) -> Tuple[list, list]:
@@ -144,8 +144,9 @@ def run() -> None:
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 	ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="path to output face mask detector model")
+	ap.add_argument("-e", "--epochs", type=int, default=20, help="number of epochs")
 	args = vars(ap.parse_args())
-	trainer = ModelTrainer(args["dataset"], args["model"])
+	trainer = ModelTrainer(args["dataset"], args["model"], args["epochs"])
 	trainer.train()
 
 if __name__ == "__main__":
