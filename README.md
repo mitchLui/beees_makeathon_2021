@@ -85,10 +85,43 @@ pip3 install -r requirements.txt
 
 ### 1.6.1. application.py
 
-This is the main
+This is the main application.
+
+To run:
+
+```sh
+python3 application.py <arguments>
+```
+
+Arguments:
+
+| Flag | Full Argument name    | Optional (Y/N)           | Type       | Default Value                | Description                                                           |
+| ---- | --------------------- | ------------------------ | ---------- | ---------------------------- | --------------------------------------------------------------------- |
+| `-f` | `--face`              | Y                        | string     | `"face_detector"`            | Path to face detector model directory                                 |
+| `-m` | `--model`             | Y                        | string     | `"mask_detector.model"`      | Face mask detector model name                                         |
+| `-r` | `--retrain`           | Y                        | store_true | `True` when used             | Retrain machine learning model                                        |
+| `-d` | `--dataset`           | Y (N when -r is not used)| string     | `"dataset"`                  | Path to input dataset                                                 |
+| `-c` | `--confidence`        | Y                        | float      | `0.8`                        | Minimum confidence level for mask model                               |
+| `-s` | `--source`            | Y                        | integer    | `0`                          | Webcam source (0 for built-in, 1 or more for external cams if any)    |  
+| `-p` | `--port`              | Y                        | string     | `"/dev/tty.usbmodem85635301"`| Port for Teensy                                                       |
+| `-h` | `--help`              | Y                        | flag       | N/A                          | Help                                                                  |
 
 
 ### 1.6.2. train_mask_detector.py
+
+Used to train the mask detector model:
+
+```sh
+python3 train_mask_detector.py <arguments>
+```
+
+Arguments:
+
+| Flag | Full Argument name    | Optional (Y/N)           | Type       | Default Value                | Description                                                           |
+| ---- | --------------------- | ------------------------ | ---------- | ---------------------------- | --------------------------------------------------------------------- |
+| `-d` | `--dataset`           | N                        | string     | `"dataset"`                  | Path to input dataset                                                 |
+| `-m` | `--model`             | Y                        | string     | `"mask_detector.model"`      | Face mask detector model name                                         |
+| `-e` | `--epochs`            | Y                        | integer    | `20`                         | Epochs (Number of passes)                                             |
 
 ---
 
