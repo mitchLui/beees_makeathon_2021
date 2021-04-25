@@ -12,6 +12,7 @@ This repository stores the project created for the [University of Bristol BEEES 
       - [1.5.1.1. Teensy (Optional)](#1511-teensy-optional)
       - [1.5.1.2. ML Model](#1512-ml-model)
       - [1.5.1.3. Python](#1513-python)
+    - [1.5.2. Deploy](#152-deploy)
   - [1.6. Usage](#16-usage)
     - [1.6.1. application.py](#161-applicationpy)
     - [1.6.2. train_mask_detector.py](#162-train_mask_detectorpy)
@@ -51,9 +52,9 @@ The model is then connected to a webcam to get a live feed and detect if a perso
 
 The tech stack of our project involves the following components:
 
-- Machine Learning Model
-- Teensy (for LED) (Optional)
-- 
+- Machine Learning Model (built on Tensorflow, )
+- Teensy for LED (Optional)
+- Mask Detection programme
 
 ---
 
@@ -62,6 +63,16 @@ The tech stack of our project involves the following components:
 ### 1.5.1. Requirements
 
 #### 1.5.1.1. Teensy (Optional)
+
+Teensy is a microcontroller based on the Arduino Software. The model for Teensy used in this project is Teensy 3.6. Specific versions of Arduino that supports the Teensyduino library are 1.0.6, 1.6.5, 1.6.9, 1.6.11, 1.6.12, 1.6.13, 1.8.13. The LED used in this project is the in-built LED of the Teensy board (pin 13). Below are the steps to setting up softwares and physical connections for teensy 3.6:
+
+1. Install [Arduino software][8] 
+2. Install [teensyduino 1.5.3][9]
+3. (optional for windows) Install [teensy loader][10]
+4. Connect teensy board using data cable
+5. Run the Arduino Software, load `examples/firmata/StandardFirmata` and upload to teensy board
+6. Let the teensy board reload (LED should blink a few times)
+7. Install pyfirmata (as included in `requirements.txt`)
 
 #### 1.5.1.2. ML Model
 
@@ -78,6 +89,10 @@ A `requirements.txt` file is included, to install Python dependencies:
 ```sh
 pip3 install -r requirements.txt
 ```
+
+### 1.5.2. Deploy
+
+See usage instructions for [application.py](#161-applicationpy)
 
 ---
 
