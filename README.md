@@ -64,10 +64,13 @@ Specifically, we created an image classifier that, based on webcam input, analys
 
 The following shows the theoretical performance of the model after 100 epochs based on our dataset (~2000 images):
 
-![model_performance_terminal](documentation_images/model_performance_terminal.png)
+![model_performance_terminal](documentation_resources/model_performance_terminal.png)
 
+The model has an astonishingly high accuracy rate of 99%. Of course this is purely theoretical but as we can see that in practice the model works quite well:
 
-The model has an astonishingly high accuracy rate of 99%.
+![demo](documentation_resources/output.gif)
+
+From the above gif we can see that when Mitch is not wearing a mask (or not wearing it properly) the LED on the Teensy is turned on to tell me that I am not wearing the mask properly.
 
 ---
 
