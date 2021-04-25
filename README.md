@@ -7,7 +7,7 @@ This repository stores the project created for the [University of Bristol BEEES 
   - [1.2. Our Team](#12-our-team)
   - [1.3. Our Project](#13-our-project)
   - [1.4. Tech Stack](#14-tech-stack)
-    - [Machine Learning](#machine-learning)
+    - [1.4.1. Machine Learning](#141-machine-learning)
   - [1.5. Deployment](#15-deployment)
     - [1.5.1. Requirements](#151-requirements)
       - [1.5.1.1. Teensy (Optional)](#1511-teensy-optional)
@@ -58,7 +58,7 @@ The tech stack of our project involves the following components:
 - Mask Detection programme (OpenCV)
 
 
-### Machine Learning
+### 1.4.1. Machine Learning
 
 Specifically, we created an image classifier that, based on webcam input, analyses the frame in real time and determines if the user was wearing a mask.
 
