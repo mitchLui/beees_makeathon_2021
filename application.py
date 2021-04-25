@@ -69,13 +69,15 @@ class Application:
             # show the output frame
             cv2.imshow("Mask Detector Prototype", frame)
             key = cv2.waitKey(1) & 0xFF
-
-            led_signal = not any(mask_array)
-            if led_signal:
-                logger.warning(f"Someone is not wearing a mask.")
-            else:
-                logger.debug(f"Everyone is wearing a mask.")
-            self.set_arduino_led(led_signal)
+            if mask_array:
+                led_signal = not any(mask_array)
+                if led_signal:
+                    logger.warning(f"Someone is not wearing a mask.")
+                else:
+                    logger.info(f"Everyone is wearing a mask.")
+                self.set_arduino_led(led_signal)
+            else: 
+                logger.info(f"No faces detected.")
             
             # if the `q` key was pressed, break from the loop
             if key == ord("q"):
@@ -85,14 +87,14 @@ class Application:
 
 
 def run() -> None: 
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-f", "--face", type=str, default="face_detector", help="path to face detector model directory")
-    ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="path to output face mask detector model")
-    ap.add_argument("-r", "--retrain", action="store_true", help="path to input dataset")
-    ap.add_argument("-d", "--dataset", default="dataset", help="path to input dataset")
-    ap.add_argument("-c", "--confidence", type=float, default=0.8, help="minimum probability to filter weak detections")
-    ap.add_argument("-s", "--source", type=int, default=0, help="integer for source camera")
-    ap.add_argument("-p", "--port", type=str, default="/dev/cu.usbmodem12341", help="port for arduino")
+    ap = argparse.ArgumentParser(add_help=True)
+    ap.add_argument("-f", "--face", type=str, default="face_detector", help="Path to face detector model directory")
+    ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="Face mask detector model name")
+    ap.add_argument("-r", "--retrain", action="store_true", help="Retrain model")
+    ap.add_argument("-d", "--dataset", type=str, default="dataset", help="Path to input dataset")
+    ap.add_argument("-c", "--confidence", type=float, default=0.8, help="Minimum confidence level for mask model to filter weak detections")
+    ap.add_argument("-s", "--source", type=int, default=0, help="Integer for source camera")
+    ap.add_argument("-p", "--port", type=str, default="/dev/tty.usbmodem85635301", help="Port for Teensy")
     args = vars(ap.parse_args())
     app = Application(args["model"], args["port"], args["retrain"], args["dataset"], args["face"], args["confidence"], args["source"])
     app.run()
