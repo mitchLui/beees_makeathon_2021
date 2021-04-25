@@ -52,9 +52,9 @@ The model is then connected to a webcam to get a live feed and detect if a perso
 
 The tech stack of our project involves the following components:
 
-- Machine Learning Model (built on Tensorflow, )
+- Machine Learning Model (built on Tensorflow, Keras)
 - Teensy for LED (Optional)
-- Mask Detection programme
+- Mask Detection programme (OpenCV)
 
 ---
 
