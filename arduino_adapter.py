@@ -16,7 +16,7 @@ class ArduinoAdapter:
                 'disabled' : (0, 1) # Rx, Tx, Crystal 
             }
             board = fm.Arduino(port)
-            board.digital[5].mode = fm.OUTPUT
+            board.digital[13].mode = fm.OUTPUT
             board.setup_layout(teensy36)
         except Exception:
             logger.warning(f"Arduino Board not found.")
@@ -25,6 +25,6 @@ class ArduinoAdapter:
 
     def set_led(self, mask: bool) -> None:
         if mask is True:
-            self.board.digital[5].write(1)
+            self.board.digital[13].write(1)
         else:
-            self.board.digital[5].write(0)
+            self.board.digital[13].write(0)
