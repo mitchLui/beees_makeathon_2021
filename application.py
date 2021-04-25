@@ -91,9 +91,9 @@ class Application:
             if mask_array:
                 led_signal = not any(mask_array)
                 if led_signal:
-                    logger.warning(f"Someone is not wearing a mask (incorrectly or does not have one on).")
+                    logger.warning(f"Person(s) not wearing a mask (properly?)")
                 else:
-                    logger.info(f"Everyone is wearing a mask.")
+                    logger.info(f"Person(s) wearing mask(s)")
                 self.set_arduino_led(led_signal)
             else: 
                 logger.info(f"No faces detected.")
