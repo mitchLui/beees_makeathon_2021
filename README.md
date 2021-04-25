@@ -70,7 +70,7 @@ The model has an astonishingly high accuracy rate of 99%. Of course this is pure
 
 ![demo](documentation_resources/output.gif)
 
-From the above gif we can see that when Mitch is not wearing a mask (or not wearing it properly) the LED on the Teensy is turned on to tell me that I am not wearing the mask properly.
+From the above gif we can see that when Mitch is not wearing a mask (or not wearing it properly / trying to cheat the system) the LED on the Teensy is turned on to tell me that I am not wearing the mask properly.
 
 ---
 
