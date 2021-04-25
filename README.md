@@ -153,6 +153,7 @@ Arguments:
 | `-d` | `--dataset`           | N                        | string     | `"dataset"`                  | Path to input dataset                                                 |
 | `-m` | `--model`             | Y                        | string     | `"mask_detector.model"`      | Face mask detector model name                                         |
 | `-e` | `--epochs`            | Y                        | integer    | `20`                         | Epochs (Number of passes)                                             |
+| `-h` | `--help`              | Y                        | flag       | N/A                          | Help                                                                  |
 
 ---
 
