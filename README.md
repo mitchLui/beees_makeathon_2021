@@ -8,6 +8,10 @@ This repository stores the project created for the [University of Bristol BEEES 
   - [1.3. Our Project](#13-our-project)
   - [1.4. Tech Stack](#14-tech-stack)
   - [1.5. Deployment](#15-deployment)
+    - [1.5.1. Requirements](#151-requirements)
+      - [1.5.1.1. Teensy](#1511-teensy)
+      - [1.5.1.2. ML Model](#1512-ml-model)
+    - [1.5.2.](#152)
   - [1.6. Usage](#16-usage)
 
 ---
@@ -43,13 +47,24 @@ The model is then connected to a webcam to get a live feed and detect if a perso
 
 ## 1.4. Tech Stack
 
+The tech stack of our project involves the following components:
 
+- Machine Learning Model
+- Teensy (for LED purposes)
+- 
 
 ---
 
 ## 1.5. Deployment
 
+### 1.5.1. Requirements
 
+#### 1.5.1.1. Teensy
+
+#### 1.5.1.2. ML Model
+
+
+### 1.5.2. 
 
 ---
 
