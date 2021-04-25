@@ -9,10 +9,12 @@ This repository stores the project created for the [University of Bristol BEEES 
   - [1.4. Tech Stack](#14-tech-stack)
   - [1.5. Deployment](#15-deployment)
     - [1.5.1. Requirements](#151-requirements)
-      - [1.5.1.1. Teensy](#1511-teensy)
+      - [1.5.1.1. Teensy (Optional)](#1511-teensy-optional)
       - [1.5.1.2. ML Model](#1512-ml-model)
-    - [1.5.2.](#152)
+      - [1.5.1.3. Python](#1513-python)
   - [1.6. Usage](#16-usage)
+    - [1.6.1. application.py](#161-applicationpy)
+    - [1.6.2. train_mask_detector.py](#162-train_mask_detectorpy)
 
 ---
 ## 1.1. About the Hackathon
@@ -50,7 +52,7 @@ The model is then connected to a webcam to get a live feed and detect if a perso
 The tech stack of our project involves the following components:
 
 - Machine Learning Model
-- Teensy (for LED purposes)
+- Teensy (for LED) (Optional)
 - 
 
 ---
@@ -59,17 +61,34 @@ The tech stack of our project involves the following components:
 
 ### 1.5.1. Requirements
 
-#### 1.5.1.1. Teensy
+#### 1.5.1.1. Teensy (Optional)
 
 #### 1.5.1.2. ML Model
 
+By default, a model is already given with this repository. If you would like to train your own model, you will need to do the following:
 
-### 1.5.2. 
+1. Gather your dataset - 1 set of images of people wearing masks, and 1 set of images of people not wearing masks (or not wearing them correctly).
+2. Put them into separate folders - `with_mask` and `without_mask`, then put these two folders into a folder called `dataset` (or anything you prefer, but remember the name of what you called the folder)
+3. Run `train_mask_detector.py` (To see how to run it, go to [this section](#162-train_mask_detectorpy))
+
+#### 1.5.1.3. Python
+
+A `requirements.txt` file is included, to install Python dependencies:
+
+```sh
+pip3 install -r requirements.txt
+```
 
 ---
 
 ## 1.6. Usage
 
+### 1.6.1. application.py
+
+This is the main
+
+
+### 1.6.2. train_mask_detector.py
 
 ---
 
