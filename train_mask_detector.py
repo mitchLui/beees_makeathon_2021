@@ -141,7 +141,7 @@ class ModelTrainer:
 
 
 def run() -> None:
-	ap = argparse.ArgumentParser()
+	ap = argparse.ArgumentParser(add_help=True)
 	ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 	ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="path to output face mask detector model")
 	ap.add_argument("-e", "--epochs", type=int, default=20, help="number of epochs")
