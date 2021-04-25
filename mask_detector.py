@@ -16,7 +16,7 @@ class MaskDetector:
 		self.source = source
 		logger.info("loading face detector model...")
 		self.prototxtPath = os.path.sep.join([self.face_detector, "deploy.prototxt"])
-		self.weightsPath = os.path.sep.join([self.face_detector, "res10_300x300_ssd_iter_140000.caffemodel"])
+		self.weightsPath = os.path.sep.join([self.face_detector, "deploy.caffemodel"])
 		self.faceNet = cv2.dnn.readNet(self.prototxtPath, self.weightsPath)
 		logger.info("loading face mask detector model...")
 		self.maskNet = load_model(self.model)
