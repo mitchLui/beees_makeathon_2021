@@ -12,7 +12,7 @@ import os
 
 class Application:
 
-    def __init__(self, model: str, port: str, retrain_model: bool = False, dataset: str = "", face_detector: str = "", confidence: int = 0.8, source: int = 0) -> None:
+    def __init__(self, model: str, port: str, retrain_model: bool = False, dataset: str = "", face_detector: str = "", confidence: int = 0.75, source: int = 0) -> None:
         if retrain_model or not os.path.isfile(model):
             logger.info("Retraining model...")
             self.retrain_model(dataset, model)
@@ -29,24 +29,20 @@ class Application:
             self.arduino.set_led(signal)
 
     def decide_mask_status(self, mask: float, withoutMask: float) -> str:
-        logger.debug(f"mask: {mask}, withoutMask: {withoutMask}")
+        #logger.debug(f"mask: {mask}, withoutMask: {withoutMask}")
         base_condition = mask > withoutMask
-        if base_condition and mask >= 0.998:
+        if base_condition and mask >= 0.997:
             return "Mask", mask
-        elif base_condition:
-            return "Uncertain", 1
-        elif not base_condition and withoutMask > 0.7:
+        elif not base_condition:
             return "No Mask", withoutMask
         else:
-            return "Uncertain", 1
+            return "No Mask", withoutMask
 
     def decide_box_colour(self, label: str) -> Tuple[int, int, int]:
         if label == "Mask":
             return (0, 255, 0)
-        elif label == "No Mask":
-            return (0, 0, 255)
         else:
-            return (0, 255, 255)
+            return (0, 0, 255)
 
     def run(self) -> None:
         logger.info("starting video stream...")
@@ -93,14 +89,11 @@ class Application:
             cv2.imshow("Mask Detector Prototype", frame)
             key = cv2.waitKey(1) & 0xFF
             if mask_array:
-                logger.debug(mask_array)
                 led_signal = not any(mask_array)
                 if led_signal:
-                    #logger.warning(f"Someone is not wearing a mask (incorrectly or does not have one on).")
-                    pass
+                    logger.warning(f"Someone is not wearing a mask (incorrectly or does not have one on).")
                 else:
-                    #logger.info(f"Everyone is wearing a mask.")
-                    pass
+                    logger.info(f"Everyone is wearing a mask.")
                 self.set_arduino_led(led_signal)
             else: 
                 logger.info(f"No faces detected.")
@@ -118,7 +111,7 @@ def run() -> None:
     ap.add_argument("-m", "--model", type=str, default="mask_detector.model", help="Face mask detector model name")
     ap.add_argument("-r", "--retrain", action="store_true", help="Retrain model")
     ap.add_argument("-d", "--dataset", type=str, default="dataset", help="Path to input dataset")
-    ap.add_argument("-c", "--confidence", type=float, default=0.8, help="Minimum confidence level for mask model to filter weak detections")
+    ap.add_argument("-c", "--confidence", type=float, default=0.75, help="Minimum confidence level for mask model to filter weak detections")
     ap.add_argument("-s", "--source", type=int, default=0, help="Integer for source camera")
     ap.add_argument("-p", "--port", type=str, default="/dev/tty.usbmodem85635301", help="Port for Teensy")
     args = vars(ap.parse_args())
