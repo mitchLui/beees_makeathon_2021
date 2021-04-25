@@ -4,6 +4,7 @@ from arduino_adapter import ArduinoAdapter
 from loguru import logger
 from imutils.video import VideoStream
 from time import sleep
+from typing import Tuple
 import argparse
 import imutils
 import cv2
@@ -26,6 +27,26 @@ class Application:
     def set_arduino_led(self, signal: bool) -> None:
         if self.arduino.board:
             self.arduino.set_led(signal)
+
+    def decide_mask_status(self, mask: float, withoutMask: float) -> str:
+        logger.debug(f"mask: {mask}, withoutMask: {withoutMask}")
+        base_condition = mask > withoutMask
+        if base_condition and mask >= 0.998:
+            return "Mask", mask
+        elif base_condition:
+            return "Uncertain", 1
+        elif not base_condition and withoutMask > 0.7:
+            return "No Mask", withoutMask
+        else:
+            return "Uncertain", 1
+
+    def decide_box_colour(self, label: str) -> Tuple[int, int, int]:
+        if label == "Mask":
+            return (0, 255, 0)
+        elif label == "No Mask":
+            return (0, 0, 255)
+        else:
+            return (0, 255, 255)
 
     def run(self) -> None:
         logger.info("starting video stream...")
@@ -50,31 +71,36 @@ class Application:
                 (mask, withoutMask) = pred
 
                 # determine the class label and color we'll use to draw the bounding box and text
-                label = "Mask" if mask > withoutMask else "No Mask"
-                color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
+                label, probability = self.decide_mask_status(mask, withoutMask)
+                color = self.decide_box_colour(label)
+
+                if label == "Mask":
+                    mask_array.append(True)
+                else:
+                    mask_array.append(False)
 
                 # include the probability in the label
-                label = f"{label}: {round(max(mask, withoutMask) * 100, 2)}%"
+                label = f"{label}: {round(probability * 100, 2)}%"
 
                 # display the label and bounding box rectangle on the output frame
                 cv2.putText(frame, label, (startX, startY - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
                 cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
-                if mask >= withoutMask:
-                    mask_array.append(True)
-                else:
-                    mask_array.append(False)
+
 
             # show the output frame
             cv2.imshow("Mask Detector Prototype", frame)
             key = cv2.waitKey(1) & 0xFF
             if mask_array:
+                logger.debug(mask_array)
                 led_signal = not any(mask_array)
                 if led_signal:
-                    logger.warning(f"Someone is not wearing a mask.")
+                    #logger.warning(f"Someone is not wearing a mask (incorrectly or does not have one on).")
+                    pass
                 else:
-                    logger.info(f"Everyone is wearing a mask.")
+                    #logger.info(f"Everyone is wearing a mask.")
+                    pass
                 self.set_arduino_led(led_signal)
             else: 
                 logger.info(f"No faces detected.")
