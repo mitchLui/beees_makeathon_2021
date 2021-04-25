@@ -17,6 +17,7 @@ from sklearn.metrics import classification_report
 from imutils import paths
 from typing import Tuple
 from loguru import logger
+import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 import os
@@ -120,6 +121,20 @@ class ModelTrainer:
 		# show a nicely formatted classification report
 		print(classification_report(testY.argmax(axis=1), predIdxs,
 			target_names=lb.classes_))
+
+	def plot_model_performance(self, H):
+		N = self.EPOCHS
+		plt.style.use("ggplot")
+		plt.figure()
+		plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
+		plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
+		plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")
+		plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc")
+		plt.title("Training Loss and Accuracy")
+		plt.xlabel("Epoch #")
+		plt.ylabel("Loss/Accuracy")
+		plt.legend(loc="lower left")
+		plt.savefig("model_performance.png")
 
 	def train(self) -> None:
 		logger.info("beginning training...")
