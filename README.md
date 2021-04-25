@@ -64,11 +64,11 @@ The tech stack of our project involves the following components:
 
 #### 1.5.1.1. Teensy (Optional)
 
-Teensy is a microcontroller based on the Arduino Software. The model for Teensy used in this project is Teensy 3.6. Specific versions of Arduino that supports the Teensyduino library are 1.0.6, 1.6.5, 1.6.9, 1.6.11, 1.6.12, 1.6.13, 1.8.13. The LED used in this project is the in-built LED of the Teensy board (pin 13). Below are the steps to setting up softwares and physical connections for teensy 3.6:
+[Teensy][8] is a microcontroller based on the Arduino Software. The model for Teensy used in this project is Teensy 3.6. Specific versions of Arduino that supports the Teensyduino library are 1.0.6, 1.6.5, 1.6.9, 1.6.11, 1.6.12, 1.6.13, 1.8.13. The LED used in this project is the in-built LED of the Teensy board (pin 13). Below are the steps to setting up softwares and physical connections for teensy 3.6:
 
-1. Install [Arduino software][8] 
-2. Install [teensyduino 1.5.3][9]
-3. (optional for windows) Install [teensy loader][10]
+1. Install [Arduino software][9] 
+2. Install [teensyduino 1.5.3][10]
+3. (optional for windows) Install [teensy loader][11]
 4. Connect teensy board using data cable
 5. Run the Arduino Software, load `examples/firmata/StandardFirmata` and upload to teensy board
 6. Let the teensy board reload (LED should blink a few times)
@@ -147,3 +147,7 @@ Arguments:
 [5]: https://www.linkedin.com/in/ken-y-6b6379142/
 [6]: https://www.linkedin.com/in/dominic-chu-544966178/
 [7]: https://www.pyimagesearch.com/2020/05/04/covid-19-face-mask-detector-with-opencv-keras-tensorflow-and-deep-learning/
+[8]: https://www.pjrc.com/teensy/
+[9]: https://www.arduino.cc/en/software
+[10]: https://www.pjrc.com/teensy/td_download.html
+[11]: https://www.pjrc.com/teensy/loader.html
