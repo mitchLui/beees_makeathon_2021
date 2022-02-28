@@ -1,10 +1,10 @@
-# 1. BEEES Make-a-thon 2021
+# 1. Mask Detector
 
 This repository stores the project created for the [University of Bristol BEEES Make-a-thon 2021][1].
 
 **UPDATE: We are ecstatic to share that this project was chosen as Best Project, Most Valid and Most Interactive!**
 
-- [1. BEEES Make-a-thon 2021](#1-beees-make-a-thon-2021)
+- [1. Mask Detector](#1-mask-detector)
   - [1.1. About the Hackathon](#11-about-the-hackathon)
   - [1.2. Our Team](#12-our-team)
   - [1.3. Our Project](#13-our-project)
